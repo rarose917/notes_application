@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Notes Application - Rose A</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <body class="d-flex justify-content-evenly vh-100">
+    <div id="app" class="m-auto text-center container-sm">
+      <h3 class="fst-italic text-decoration-underline">Notes Application</h3>
+      <!--Form to create Notes-->
+      <form @submit.prevent="addNote">
+        <p>
+          <input
+            class="p-2"
+            type="text"
+            v-model="createNote"
+            placeholder="Create Note"
+            class="fst-italic"
+          />
+          <button type="submit" class="btn btn-success p-2 border-left">
+            Create Note
+          </button>
+        </p>
+      </form>
+
+      <!--Form to delete created notes-->
+      <!-- for a created note add a delete button -->
+      <ol class="list-group list-group-numbered">
+        <li v-for="note in notes" class="list-group-item">
+          <form @submit.prevent="deleteNote(note)">
+            {{ note.text }}
+            <button type="submit" class="btn btn-danger">Delete Note</button>
+          </form>
+        </li>
+      </ol>
+    </div>
+
+    <script>
+      Vue.createApp({
+        data() {
+          return {
+            createNote: "",
+            notes: [],
+          };
+        },
+        methods: {
+          addNote() {
+            this.notes.push({
+              text: this.createNote,
+            });
+            this.createNote = "";
+          },
+          deleteNote(note) {
+            this.notes.splice(note, 1);
+          },
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>
